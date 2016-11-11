@@ -76,15 +76,15 @@ set smarttab
 set expandtab
 
 set laststatus=2
-set statusline= 
-set statusline+=%-3.3n\                      " buffer number 
-set statusline+=%f\                          " filename 
-set statusline+=%h%m%r%w                     " status flags 
-set statusline+=\[%{strlen(&ft)?&ft:'none'}] " file type 
-set statusline+=%=                           " right align remainder 
-set statusline+=0x%-8B                       " character value 
-set statusline+=%-14(%l,%c%V%)               " line, character 
-set statusline+=%<%P                         " file position 
+set statusline=
+set statusline+=%-3.3n\                      " buffer number
+set statusline+=%f\                          " filename
+set statusline+=%h%m%r%w                     " status flags
+set statusline+=\[%{strlen(&ft)?&ft:'none'}] " file type
+set statusline+=%=                           " right align remainder
+set statusline+=0x%-8B                       " character value
+set statusline+=%-14(%l,%c%V%)               " line, character
+set statusline+=%<%P                         " file position
 
 set autoindent
 set smartindent
@@ -99,16 +99,16 @@ Plugin 'dfxyz/CandyPaper.vim'
 Plugin 'altercation/vim-colors-solarized'
 Plugin 'endel/vim-github-colorscheme'
 set background=dark
-colorscheme solarized
-"Plugin 'jpo/vim-railscasts-theme'
-"colorscheme railscasts 
+"colorscheme solarized
+Plugin 'jpo/vim-railscasts-theme'
+colorscheme railscasts
 
 "-----------------------------------------------------
 " Bundle 'chunzi/minibufexpl.vim'
 " let g:miniBufExplMapWindowNavVim = 1
 " let g:miniBufExplMapWindowNavArrows = 1
 " let g:miniBufExplMapCTabSwitchBufs = 1
-" let g:miniBufExplModSelTarget = 1 
+" let g:miniBufExplModSelTarget = 1
 
 Bundle 'tpope/vim-markdown'
 Bundle 'tpope/vim-surround'
@@ -141,9 +141,23 @@ set clipboard=unnamed
 Bundle 'https://github.com/ervandew/supertab.git'
 Bundle 'chrisgillis/vim-bootstrap3-snippets'
 
-
 " Searching
 Plugin 'kien/ctrlp.vim'
+let g:ctrlp_map = '<c-p>'
+let g:ctrlp_cmd = 'CtrlP'
+let g:ctrlp_working_path_mode = 'a'
+"let g:ctrlp_custom_ignore = '\v[\/]\.(git|hg|svn)\|logs\|public\|node_modules\|DS_Store$'
+
+let g:ctrlp_custom_ignore = {
+  \ 'dir':  '\v[\/]\.(git|hg|svn)\|logs\|temp$',
+  \ 'file': '\v\.(exe|so|dll|png|jpg|jpeg|tiff|bmp)$',
+  \ 'link': 'some_bad_symbolic_links',
+  \ }
+
+set wildignore+=*/tmp/*,*.so,*.swp,*.zip     " Linux/MacOSX
+
+let g:trlp_user_command = 'find %s -type f'        " MacOSX/Linux
+
 
 " Syntax
 Plugin 'jelera/vim-javascript-syntax'
@@ -154,18 +168,18 @@ let g:ycm_use_ultisnips_completer=1
 let g:ycm_min_num_of_chars_for_completion = 3
 
 let g:ycm_semantic_triggers =  {
-  \   'c' : ['->', '.'],
-  \   'objc' : ['->', '.', 're!\[[_a-zA-Z]+\w*\s', 're!^\s*[^\W\d]\w*\s',
-  \             're!\[.*\]\s'],
-  \   'ocaml' : ['.', '#'],
-  \   'cpp,objcpp' : ['->', '.', '::'],
-  \   'perl' : ['->'],
-  \   'php' : ['->', '::'],
-  \   'cs,java,javascript,typescript,d,python,perl6,scala,vb,elixir,go' : ['.'],
-  \   'ruby' : ['.', '::'],
-  \   'lua' : ['.', ':'],
-  \   'erlang' : [':'],
-  \ }
+            \   'c' : ['->', '.'],
+            \   'objc' : ['->', '.', 're!\[[_a-zA-Z]+\w*\s', 're!^\s*[^\W\d]\w*\s',
+            \             're!\[.*\]\s'],
+            \   'ocaml' : ['.', '#'],
+            \   'cpp,objcpp' : ['->', '.', '::'],
+            \   'perl' : ['->', '::'],
+            \   'php' : ['->', '::'],
+            \   'cs,java,javascript,typescript,d,python,perl6,scala,vb,elixir,go' : ['.'],
+            \   'ruby' : ['.', '::'],
+            \   'lua' : ['.', ':'],
+            \   'erlang' : [':'],
+            \ }
 
 " If you want :UltiSnipsEdit to split your window.
 let g:UltiSnipsEditSplit="vertical"
@@ -242,11 +256,6 @@ Bundle "justinj/vim-react-snippets"
 Bundle "MarcWeber/vim-addon-mw-utils"
 Bundle "tomtom/tlib_vim"
 
-" 2015-11-27
-" settting for control p to ignore some directorys
-let g:ctrlp_custom_ignore = 'node_modules\|DS_Store\|git\|public\|logs'
-set wildignore+=*/tmp/*,*.so,*.swp,*.zip     " Linux/MacOSX
-
 " 2015-12-03
 Plugin 'mattn/emmet-vim'
 let g:user_emmet_install_global = 0
@@ -269,7 +278,27 @@ Bundle "https://github.com/keith/swift.vim.git"
 " 2016-07-12  Todo
 Bundle "http://github.com/freitass/todo.txt-vim.git"
 
-" Dash 
+" Dash
 Plugin 'rizzatti/dash.vim'
 
 hi Normal  ctermfg=252 ctermbg=none
+
+" tagbar for vim  2016-11-01
+Bundle 'https://github.com/majutsushi/tagbar.git'
+nmap <F9> :TagbarToggle<CR>
+
+" fix edit crontab issue
+if $VIM_CRONTAB == "true"
+    set nobackup
+    set nowritebackup
+endif
+
+
+" 2016-11-11
+Bundle "https://github.com/tpope/vim-rails.git"
+Bundle "https://github.com/vim-ruby/vim-ruby.git"
+
+" sass highlight
+Plugin 'JulesWang/css.vim'
+Plugin 'cakebaker/scss-syntax.vim'
+Plugin 'isRuslan/vim-es6'
